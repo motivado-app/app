@@ -95,7 +95,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                             keyboardType: TextInputType.phone,
                             decoration: InputDecoration(
-                              hintText: 'Phone Number to Login',
+                              hintText: 'Enter Phone Number',
                               enabledBorder: OutlineInputBorder(
                                   borderSide:
                                       const BorderSide(color: Colors.black12),
