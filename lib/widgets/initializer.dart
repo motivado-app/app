@@ -1,6 +1,9 @@
+// Packages
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
+// Screens
 import '../screens/login_screen.dart';
 import '../screens/motivation_home_screen.dart';
 

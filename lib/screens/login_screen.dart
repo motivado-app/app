@@ -1,9 +1,14 @@
+// Packages
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:otp_text_field/otp_field.dart';
 import 'package:otp_text_field/style.dart';
+
+// Screens
 import './motivation_home_screen.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+
+// Widgets
 
 enum MobileVerificationState {
   showMobileForm,
@@ -18,8 +23,6 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  // final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
-
   var _currSate = MobileVerificationState.showMobileForm;
   final _phNum = TextEditingController();
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -47,20 +50,38 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
+  void _verificationFailed(verificationFailed) async {
+    setState(() {
+      _showloading = false;
+    });
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(verificationFailed.message.toString()),
+      ),
+    );
+  }
+
+  void _codeSent(verifyId, resendingToken) async {
+    setState(() {
+      _currSate = MobileVerificationState.showOtpForm;
+      _showloading = false;
+      verificationId = verifyId;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return _showloading
-        ? const Scaffold(
-            backgroundColor: Colors.white,
-            body: Center(
-              child: CircularProgressIndicator(),
-            ),
-          )
-        : _currSate == MobileVerificationState.showMobileForm
-            ? Scaffold(
-                //resizeToAvoidBottomInset: false,
-                backgroundColor: Colors.white,
-                body: Center(
+    return Scaffold(
+      backgroundColor: Theme.of(context).backgroundColor,
+      body: _showloading
+          ? const Scaffold(
+              backgroundColor: Colors.white,
+              body: Center(
+                child: CircularProgressIndicator(),
+              ),
+            )
+          : _currSate == MobileVerificationState.showMobileForm
+              ? Center(
                   child: SingleChildScrollView(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -135,25 +156,8 @@ class _LoginScreenState extends State<LoginScreen> {
                               verificationCompleted: (credential) async {
                                 // signInWithPhoneAuthCredential(credential);
                               },
-                              verificationFailed: (verificationFailed) async {
-                                setState(() {
-                                  _showloading = false;
-                                });
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text(
-                                        verificationFailed.message.toString()),
-                                  ),
-                                );
-                              },
-                              codeSent: (verifyId, resendingToken) async {
-                                setState(() {
-                                  _currSate =
-                                      MobileVerificationState.showOtpForm;
-                                  _showloading = false;
-                                  verificationId = verifyId;
-                                });
-                              },
+                              verificationFailed: _verificationFailed,
+                              codeSent: _codeSent,
                               codeAutoRetrievalTimeout:
                                   (verificationId) async {},
                             );
@@ -161,8 +165,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           style: ButtonStyle(
                             foregroundColor:
                                 MaterialStateProperty.all(Colors.white),
-                            backgroundColor:
-                                MaterialStateProperty.all(Colors.black),
+                            backgroundColor: MaterialStateProperty.all(
+                              Theme.of(context).primaryColor,
+                            ),
                             shape: MaterialStateProperty.all<
                                 RoundedRectangleBorder>(
                               RoundedRectangleBorder(
@@ -181,12 +186,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       ],
                     ),
                   ),
-                ),
-              )
-            : Scaffold(
-                // key: _scaffoldKey,
-                backgroundColor: Colors.white,
-                body: Center(
+                )
+              : Center(
                   child: SingleChildScrollView(
                     child: Column(
                       children: <Widget>[
@@ -226,6 +227,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                 ),
-              );
+    );
   }
 }
