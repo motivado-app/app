@@ -4,7 +4,6 @@ import 'package:otp_text_field/otp_field.dart';
 import 'package:otp_text_field/style.dart';
 import './motivation_home_screen.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import './otp_screen.dart';
 
 enum MobileVerificationState {
   showMobileForm,
@@ -12,7 +11,7 @@ enum MobileVerificationState {
 }
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+  static const routeName = '/login';
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
