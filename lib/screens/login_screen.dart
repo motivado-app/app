@@ -50,7 +50,7 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
-  void _verificationFailed(verificationFailed) async {
+  void _verificationFailed(verificationFailed) {
     setState(() {
       _showloading = false;
     });
@@ -61,9 +61,9 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  void _codeSent(verifyId, resendingToken) async {
+  void _codeSent(verifyId, resendingToken) {
     setState(() {
-      _currSate = MobileVerificationState.showOtpForm;
+      //_currSate = MobileVerificationState.showOtpForm;
       _showloading = false;
       verificationId = verifyId;
     });
@@ -148,18 +148,17 @@ class _LoginScreenState extends State<LoginScreen> {
                         ElevatedButton(
                           onPressed: () async {
                             setState(() {
-                              _showloading = true;
+                              _currSate = MobileVerificationState.showOtpForm;
                             });
 
                             await _auth.verifyPhoneNumber(
                               phoneNumber: '+91${_phNum.text}',
-                              verificationCompleted: (credential) async {
+                              verificationCompleted: (credential) {
                                 // signInWithPhoneAuthCredential(credential);
                               },
                               verificationFailed: _verificationFailed,
                               codeSent: _codeSent,
-                              codeAutoRetrievalTimeout:
-                                  (verificationId) async {},
+                              codeAutoRetrievalTimeout: (verificationId) {},
                             );
                           },
                           style: ButtonStyle(
@@ -214,7 +213,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           style: const TextStyle(fontSize: 17),
                           textFieldAlignment: MainAxisAlignment.spaceAround,
                           fieldStyle: FieldStyle.underline,
-                          onCompleted: (pin) async {
+                          onCompleted: (pin) {
                             PhoneAuthCredential phoneAuthCredential =
                                 PhoneAuthProvider.credential(
                               verificationId: verificationId,
