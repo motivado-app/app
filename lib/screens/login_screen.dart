@@ -101,7 +101,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: const Text(
                             'Welcome to Daily Motivation',
                             style: TextStyle(
-                              fontSize: 22,
+                              fontSize: 24,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -112,38 +112,40 @@ class _LoginScreenState extends State<LoginScreen> {
                             vertical: 2,
                           ),
                           child: TextField(
+                            textAlign: TextAlign.center,
                             controller: _phNum,
                             style: const TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black87,
+                              fontSize: 21,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.black,
                             ),
                             keyboardType: TextInputType.phone,
                             decoration: InputDecoration(
+                              //prefixText: '+91',
                               hintText: 'Enter Phone Number',
                               enabledBorder: OutlineInputBorder(
                                   borderSide:
                                       const BorderSide(color: Colors.black12),
-                                  borderRadius: BorderRadius.circular(10)),
+                                  borderRadius: BorderRadius.circular(12)),
                               focusedBorder: OutlineInputBorder(
                                   borderSide:
                                       const BorderSide(color: Colors.black12),
-                                  borderRadius: BorderRadius.circular(10)),
-                              prefix: const Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 8),
+                                  borderRadius: BorderRadius.circular(12)),
+                              prefixIcon: const Padding(
+                                padding: EdgeInsets.all(10),
                                 child: Text(
-                                  '(+91)',
+                                  '+91',
                                   style: TextStyle(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.bold,
+                                    fontSize: 21,
+                                    fontWeight: FontWeight.w400,
                                   ),
                                 ),
                               ),
-                              suffixIcon: const Icon(
-                                Icons.call,
-                                color: Colors.grey,
-                                size: 32,
-                              ),
+                              // prefixIcon: const Icon(
+                              //   Icons.call,
+                              //   color: Colors.grey,
+                              //   size: 32,
+                              // ),
                             ),
                           ),
                         ),
