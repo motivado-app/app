@@ -29,6 +29,12 @@ class _LoginScreenState extends State<LoginScreen> {
   late String verificationId;
   bool _showloading = false;
 
+  @override
+  void dispose() {
+    _phNum.dispose();
+    super.dispose();
+  }
+
   void signInWithPhoneAuthCredential(PhoneAuthCredential cred) async {
     setState(() {
       _showloading = true;
@@ -111,7 +117,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             horizontal: 40,
                             vertical: 2,
                           ),
-                          child: TextField(
+                          child: TextFormField(
                             textAlign: TextAlign.center,
                             controller: _phNum,
                             style: const TextStyle(
@@ -120,9 +126,15 @@ class _LoginScreenState extends State<LoginScreen> {
                               color: Colors.black,
                             ),
                             keyboardType: TextInputType.phone,
+                            //maxLength: 10,
                             decoration: InputDecoration(
                               //prefixText: '+91',
+                              labelText: 'Phone Number',
                               hintText: 'Enter Phone Number',
+                              errorText: _phNum.text.isNotEmpty &&
+                                      _phNum.text.length != 10
+                                  ? 'Please Enter a Valid Number'
+                                  : null,
                               enabledBorder: OutlineInputBorder(
                                   borderSide:
                                       const BorderSide(color: Colors.black12),
@@ -141,11 +153,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                   ),
                                 ),
                               ),
-                              // prefixIcon: const Icon(
-                              //   Icons.call,
-                              //   color: Colors.grey,
-                              //   size: 32,
-                              // ),
                             ),
                           ),
                         ),
@@ -154,19 +161,31 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         ElevatedButton(
                           onPressed: () async {
-                            setState(() {
-                              _currSate = MobileVerificationState.showOtpForm;
-                            });
+                            if (_phNum.text.isNotEmpty &&
+                                _phNum.text.length == 10) {
+                              setState(() {
+                                _currSate = MobileVerificationState.showOtpForm;
+                              });
 
-                            await _auth.verifyPhoneNumber(
-                              phoneNumber: '+91${_phNum.text}',
-                              verificationCompleted: (credential) {
-                                // signInWithPhoneAuthCredential(credential);
-                              },
-                              verificationFailed: _verificationFailed,
-                              codeSent: _codeSent,
-                              codeAutoRetrievalTimeout: (verificationId) {},
-                            );
+                              await _auth.verifyPhoneNumber(
+                                phoneNumber: '+91${_phNum.text}',
+                                verificationCompleted: (credential) {
+                                  // signInWithPhoneAuthCredential(credential);
+                                },
+                                verificationFailed: _verificationFailed,
+                                codeSent: _codeSent,
+                                codeAutoRetrievalTimeout: (verificationId) {},
+                              );
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text(
+                                    'Please Enter a Valid Phone Number',
+                                    style: TextStyle(color: Colors.redAccent),
+                                  ),
+                                ),
+                              );
+                            }
                           },
                           style: ButtonStyle(
                             foregroundColor:
