@@ -47,6 +47,11 @@ class _LoginScreenState extends State<LoginScreen> {
       setState(() {
         _showloading = false;
       });
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Sorry! OTP Verification Failed'),
+        ),
+      );
     }
   }
 
