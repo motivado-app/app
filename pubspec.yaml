@@ -40,6 +40,7 @@ dependencies:
   firebase_storage: ^10.2.3
   flutter_svg: ^1.0.0
   otp_text_field: ^1.1.1
+  android_alarm_manager_plus: ^2.0.3
 
 dev_dependencies:
   flutter_test:
