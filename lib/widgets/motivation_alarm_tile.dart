@@ -23,7 +23,7 @@ class MotivationAlarmTile extends StatelessWidget {
             offset: const Offset(0, 3), // changes position of shadow
           ),
         ],
-        color: Theme.of(context).canvasColor,
+        color: Colors.white,
         borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(10),
           topRight: Radius.circular(10),
@@ -34,8 +34,8 @@ class MotivationAlarmTile extends StatelessWidget {
       child: Center(
         child: ListTile(
           leading: const Text(
-            '10:00',
-            style: TextStyle(fontSize: 40),
+            '☀️ 10:00',
+            style: TextStyle(fontSize: 34),
           ),
           title: Text(
             'Everyday',

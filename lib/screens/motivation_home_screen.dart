@@ -30,7 +30,7 @@ class _MotivationHomeScreenState extends State<MotivationHomeScreen> {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      // floatingActionButtonLocation: FloatingActionButtonLocation.,
       floatingActionButton: FloatingActionButton(
         backgroundColor: Theme.of(context).focusColor,
         onPressed: () {},
@@ -50,7 +50,7 @@ class _MotivationHomeScreenState extends State<MotivationHomeScreen> {
             padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
             child: SvgPicture.asset(
               'assets/images/welcome.svg',
-              height: _screenHeight * 0.5,
+              height: _screenHeight * 0.4,
             ),
           ),
           Container(
@@ -64,12 +64,12 @@ class _MotivationHomeScreenState extends State<MotivationHomeScreen> {
             ),
           ),
           Container(
-            height: _screenHeight * 0.48,
+            height: _screenHeight * 0.58,
             child: ListView.builder(
               itemBuilder: (ctx, idx) {
                 return MotivationAlarmTile(_alarmStatus, _setAlarm);
               },
-              itemCount: 1,
+              itemCount: 10,
             ),
           ),
         ],
