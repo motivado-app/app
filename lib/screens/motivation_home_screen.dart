@@ -64,12 +64,12 @@ class _MotivationHomeScreenState extends State<MotivationHomeScreen> {
             ),
           ),
           Container(
-            height: _screenHeight * 0.58,
+            height: _screenHeight * 0.582,
             child: ListView.builder(
               itemBuilder: (ctx, idx) {
                 return MotivationAlarmTile(_alarmStatus, _setAlarm);
               },
-              itemCount: 10,
+              itemCount: 3,
             ),
           ),
         ],

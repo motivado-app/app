@@ -10,16 +10,16 @@ class MotivationAlarmTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 100,
+      height: 110,
       //width: double.infinity,
-      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+      margin: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(
             color: Colors.grey.withOpacity(0.5),
-            spreadRadius: 5,
-            blurRadius: 7,
+            spreadRadius: 3,
+            blurRadius: 5,
             offset: const Offset(0, 3), // changes position of shadow
           ),
         ],
@@ -33,9 +33,31 @@ class MotivationAlarmTile extends StatelessWidget {
       ),
       child: Center(
         child: ListTile(
-          leading: const Text(
-            '☀️ 10:00',
-            style: TextStyle(fontSize: 34),
+          horizontalTitleGap: 5,
+          // leading: const Text(
+          //   '☀️ 10:00',
+          //   style: TextStyle(fontSize: 28),
+          // ),
+          leading: Row(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: const [
+              Text(
+                '☀️ 10:00',
+                style: TextStyle(fontSize: 28),
+              ),
+              SizedBox(
+                width: 2,
+              ),
+              Text(
+                'am',
+                style: TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w300,
+                    color: Colors.black54),
+              ),
+            ],
           ),
           title: Text(
             'Everyday',

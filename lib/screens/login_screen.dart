@@ -41,9 +41,9 @@ class _LoginScreenState extends State<LoginScreen> {
     });
     try {
       final authCredential = await _auth.signInWithCredential(cred);
-      setState(() {
-        _showloading = false;
-      });
+      // setState(() {
+      //   _showloading = false;
+      // });
 
       if (authCredential.user != null) {
         Navigator.of(context)
@@ -74,7 +74,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void _codeSent(verifyId, resendingToken) {
     setState(() {
-      //_currSate = MobileVerificationState.showOtpForm;
+      _currSate = MobileVerificationState.showOtpForm;
       _showloading = false;
       verificationId = verifyId;
     });
@@ -164,13 +164,13 @@ class _LoginScreenState extends State<LoginScreen> {
                             if (_phNum.text.isNotEmpty &&
                                 _phNum.text.length == 10) {
                               setState(() {
-                                _currSate = MobileVerificationState.showOtpForm;
+                                _showloading = true;
                               });
 
                               await _auth.verifyPhoneNumber(
                                 phoneNumber: '+91${_phNum.text}',
                                 verificationCompleted: (credential) {
-                                  // signInWithPhoneAuthCredential(credential);
+                                  signInWithPhoneAuthCredential(credential);
                                 },
                                 verificationFailed: _verificationFailed,
                                 codeSent: _codeSent,
