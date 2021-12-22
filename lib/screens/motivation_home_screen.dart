@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -33,9 +34,11 @@ class _MotivationHomeScreenState extends State<MotivationHomeScreen> {
       // floatingActionButtonLocation: FloatingActionButtonLocation.,
       floatingActionButton: FloatingActionButton(
         backgroundColor: Theme.of(context).focusColor,
-        onPressed: () {},
+        onPressed: () {
+          FirebaseAuth.instance.signOut();
+        },
         child: Icon(
-          Icons.add,
+          Icons.logout,
           color: Theme.of(context).primaryColor,
         ),
       ),
@@ -69,7 +72,7 @@ class _MotivationHomeScreenState extends State<MotivationHomeScreen> {
               itemBuilder: (ctx, idx) {
                 return MotivationAlarmTile(_alarmStatus, _setAlarm);
               },
-              itemCount: 3,
+              itemCount: 6,
             ),
           ),
         ],

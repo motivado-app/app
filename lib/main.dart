@@ -1,13 +1,14 @@
 // Packages
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
 
 // Screens
-import './screens/motivation_home_screen.dart';
+import '../screens/login_screen.dart';
+import '../screens/motivation_home_screen.dart';
 
 // Widgets
-import './widgets/initializer.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,7 +32,15 @@ class MyApp extends StatelessWidget {
         accentColor: const Color(0xffffb61d),
         focusColor: const Color(0xff64fcd9),
       ),
-      home: InitializerWidget(),
+      //home: InitializerWidget(),
+      home: StreamBuilder(
+          stream: FirebaseAuth.instance.authStateChanges(),
+          builder: (ctx, userSnapshot) {
+            if (userSnapshot.hasData) {
+              return MotivationHomeScreen();
+            }
+            return LoginScreen();
+          }),
       routes: {
         MotivationHomeScreen.routeName: (ctx) => MotivationHomeScreen(),
       },
