@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:otp_text_field/otp_field.dart';
 import 'package:otp_text_field/style.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 // Screens
 import './motivation_home_screen.dart';
@@ -46,8 +47,16 @@ class _LoginScreenState extends State<LoginScreen> {
       // });
 
       if (authCredential.user != null) {
-        Navigator.of(context)
-            .pushReplacementNamed(MotivationHomeScreen.routeName);
+        var uid = authCredential.user!.uid.toString();
+        FirebaseFirestore.instance.collection(uid).doc('userData').set({
+          'phoneNumber': authCredential.user!.phoneNumber,
+        }).then((_) {
+          print("collection created");
+        }).catchError((_) {
+          print("an error occured");
+        });
+        // Navigator.of(context)
+        //     .pushReplacementNamed(MotivationHomeScreen.routeName);
       }
     } on FirebaseAuthException catch (e) {
       setState(() {

@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../widgets/motivation_alarm_tile.dart';
 
@@ -21,6 +23,8 @@ class _MotivationHomeScreenState extends State<MotivationHomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final _user = FirebaseAuth.instance.currentUser;
+
     final double _screenHeight = MediaQuery.of(context).size.height -
         MediaQuery.of(context).padding.top -
         MediaQuery.of(context).padding.bottom;
@@ -68,13 +72,39 @@ class _MotivationHomeScreenState extends State<MotivationHomeScreen> {
           ),
           Container(
             height: _screenHeight * 0.582,
-            child: ListView.builder(
-              itemBuilder: (ctx, idx) {
-                return MotivationAlarmTile(_alarmStatus, _setAlarm);
+            child: StreamBuilder(
+              stream: FirebaseFirestore.instance
+                  .collection(_user!.uid)
+                  .doc('alarms')
+                  .collection('alarmData')
+                  .snapshots(),
+              builder: (ctx, AsyncSnapshot snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return CircularProgressIndicator();
+                }
+
+                return ListView(
+                  children: snapshot.data.docs.map<Widget>((document) {
+                    return MotivationAlarmTile(
+                      _alarmStatus,
+                      _setAlarm,
+                      document['time'],
+                      document['repeat'],
+                    );
+                  }).toList(),
+                );
               },
-              itemCount: 6,
             ),
           ),
+          // Container(
+          //   height: _screenHeight * 0.582,
+          //   child: ListView.builder(
+          //     itemBuilder: (ctx, idx) {
+          //       return MotivationAlarmTile(_alarmStatus, _setAlarm);
+          //     },
+          //     itemCount: 6,
+          //   ),
+          // ),
         ],
       ),
     );

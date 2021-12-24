@@ -4,8 +4,10 @@ import 'package:flutter/cupertino.dart';
 class MotivationAlarmTile extends StatelessWidget {
   var setAlarm;
   final bool alarmStatus;
+  final String time;
+  final String repeat;
 
-  MotivationAlarmTile(this.alarmStatus, this.setAlarm);
+  MotivationAlarmTile(this.alarmStatus, this.setAlarm, this.time, this.repeat);
 
   @override
   Widget build(BuildContext context) {
@@ -42,17 +44,17 @@ class MotivationAlarmTile extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.end,
             mainAxisAlignment: MainAxisAlignment.start,
-            children: const [
+            children: [
               Text(
-                '☀️ 10:00',
-                style: TextStyle(fontSize: 28),
+                '☀️ $time',
+                style: const TextStyle(fontSize: 28),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 2,
               ),
               Text(
                 'am',
-                style: TextStyle(
+                style: const TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.w300,
                     color: Colors.black54),
@@ -60,7 +62,7 @@ class MotivationAlarmTile extends StatelessWidget {
             ],
           ),
           title: Text(
-            'Everyday',
+            repeat,
             textAlign: TextAlign.end,
             style: TextStyle(
               fontSize: 12,
