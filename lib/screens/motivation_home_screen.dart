@@ -44,21 +44,6 @@ class MotivationHomeScreen extends StatelessWidget {
           )
         ],
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   backgroundColor: Theme.of(context).focusColor,
-      //   onPressed: () {
-      //     FirebaseAuth.instance.signOut();
-      //   },
-      //   child: Icon(
-      //     Icons.logout,
-      //     color: Theme.of(context).primaryColor,
-      //   ),
-      // ),
-      // appBar: AppBar(
-      //   //toolbarHeight: 60,
-      //   backgroundColor: Theme.of(context).primaryColor,
-      //   title: const Text('Daily Motivation'),
-      // ),
       body: Column(
         children: [
           Padding(
@@ -110,15 +95,6 @@ class MotivationHomeScreen extends StatelessWidget {
               },
             ),
           ),
-          // Container(
-          //   height: _screenHeight * 0.582,
-          //   child: ListView.builder(
-          //     itemBuilder: (ctx, idx) {
-          //       return MotivationAlarmTile(_alarmStatus, _setAlarm);
-          //     },
-          //     itemCount: 6,
-          //   ),
-          // ),
         ],
       ),
     );
