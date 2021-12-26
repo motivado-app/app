@@ -3,23 +3,12 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:expendable_fab/expendable_fab.dart';
 
 import '../widgets/motivation_alarm_tile.dart';
 
-class MotivationHomeScreen extends StatefulWidget {
+class MotivationHomeScreen extends StatelessWidget {
   static const routeName = '/motivation-home';
-
-  @override
-  State<MotivationHomeScreen> createState() => _MotivationHomeScreenState();
-}
-
-class _MotivationHomeScreenState extends State<MotivationHomeScreen> {
-  bool _alarmStatus = false;
-  void _setAlarm() {
-    setState(() {
-      _alarmStatus = !_alarmStatus;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,16 +25,35 @@ class _MotivationHomeScreenState extends State<MotivationHomeScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       // floatingActionButtonLocation: FloatingActionButtonLocation.,
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Theme.of(context).focusColor,
-        onPressed: () {
-          FirebaseAuth.instance.signOut();
-        },
-        child: Icon(
-          Icons.logout,
-          color: Theme.of(context).primaryColor,
-        ),
+      floatingActionButton: ExpendableFab(
+        distance: 70,
+        children: [
+          ActionButton(
+            onPressed: () {},
+            icon: Icon(
+              Icons.logout,
+              color: Theme.of(context).primaryColor,
+            ),
+          ),
+          ActionButton(
+            onPressed: () {},
+            icon: Icon(
+              Icons.add,
+              color: Theme.of(context).primaryColor,
+            ),
+          )
+        ],
       ),
+      // floatingActionButton: FloatingActionButton(
+      //   backgroundColor: Theme.of(context).focusColor,
+      //   onPressed: () {
+      //     FirebaseAuth.instance.signOut();
+      //   },
+      //   child: Icon(
+      //     Icons.logout,
+      //     color: Theme.of(context).primaryColor,
+      //   ),
+      // ),
       // appBar: AppBar(
       //   //toolbarHeight: 60,
       //   backgroundColor: Theme.of(context).primaryColor,
@@ -70,8 +78,10 @@ class _MotivationHomeScreenState extends State<MotivationHomeScreen> {
               textWidthBasis: TextWidthBasis.longestLine,
             ),
           ),
-          Container(
-            height: _screenHeight * 0.582,
+          const SizedBox(
+            height: 20,
+          ),
+          Expanded(
             child: StreamBuilder(
               stream: FirebaseFirestore.instance
                   .collection(_user!.uid)
@@ -92,8 +102,6 @@ class _MotivationHomeScreenState extends State<MotivationHomeScreen> {
                 return ListView(
                   children: snapshot.data.docs.map<Widget>((document) {
                     return MotivationAlarmTile(
-                      _alarmStatus,
-                      _setAlarm,
                       document['time'],
                       document['repeat'],
                     );

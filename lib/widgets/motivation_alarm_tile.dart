@@ -1,13 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
-class MotivationAlarmTile extends StatelessWidget {
-  var setAlarm;
-  final bool alarmStatus;
+class MotivationAlarmTile extends StatefulWidget {
   final String time;
   final String repeat;
 
-  MotivationAlarmTile(this.alarmStatus, this.setAlarm, this.time, this.repeat);
+  MotivationAlarmTile(this.time, this.repeat);
+
+  @override
+  State<MotivationAlarmTile> createState() => _MotivationAlarmTileState();
+}
+
+class _MotivationAlarmTileState extends State<MotivationAlarmTile> {
+  bool _alarmStatus = false;
+  void _setAlarm() {
+    setState(() {
+      _alarmStatus = !_alarmStatus;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +56,7 @@ class MotivationAlarmTile extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Text(
-                '☀️ $time',
+                '☀️ ${widget.time}',
                 style: const TextStyle(fontSize: 28),
               ),
               const SizedBox(
@@ -62,18 +72,18 @@ class MotivationAlarmTile extends StatelessWidget {
             ],
           ),
           title: Text(
-            repeat,
+            widget.repeat,
             textAlign: TextAlign.end,
             style: TextStyle(
               fontSize: 12,
-              color: Theme.of(context).accentColor,
+              color: Theme.of(context).focusColor,
               fontWeight: FontWeight.w300,
             ),
           ),
           trailing: CupertinoSwitch(
-            value: alarmStatus,
-            onChanged: (_) => setAlarm(),
-            activeColor: Theme.of(context).focusColor,
+            value: _alarmStatus,
+            onChanged: (_) => _setAlarm(),
+            activeColor: Theme.of(context).accentColor,
           ),
         ),
       ),

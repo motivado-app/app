@@ -29,8 +29,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: const Color(0xff28282B),
         backgroundColor: Colors.white,
-        accentColor: const Color(0xffffb61d),
-        focusColor: const Color(0xff64fcd9),
+        accentColor: const Color(0xff64fcd9),
+        focusColor: const Color(0xffffb61d),
       ),
       //home: InitializerWidget(),
       home: StreamBuilder(
