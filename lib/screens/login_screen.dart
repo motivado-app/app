@@ -114,7 +114,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         Container(
                           padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
                           child: const Text(
-                            'Welcome to Daily Motivation',
+                            'Welcome to Motivado',
                             style: TextStyle(
                               fontSize: 24,
                               fontWeight: FontWeight.bold,

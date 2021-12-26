@@ -2,9 +2,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:expendable_fab/expendable_fab.dart';
 
 import '../widgets/motivation_alarm_tile.dart';
+import '../widgets/empty_motivators.dart';
+import '../widgets/floating_button.dart';
 
 class MotivationHomeScreen extends StatelessWidget {
   static const routeName = '/motivation-home';
@@ -24,26 +25,9 @@ class MotivationHomeScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       // floatingActionButtonLocation: FloatingActionButtonLocation.,
-      floatingActionButton: ExpendableFab(
-        distance: 70,
-        children: [
-          ActionButton(
-            onPressed: () => FirebaseAuth.instance.signOut(),
-            icon: Icon(
-              Icons.logout,
-              color: Theme.of(context).primaryColor,
-            ),
-          ),
-          ActionButton(
-            onPressed: () {},
-            icon: Icon(
-              Icons.add,
-              color: Theme.of(context).primaryColor,
-            ),
-          )
-        ],
-      ),
+      floatingActionButton: const FloatingButton(),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Padding(
             padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
@@ -83,14 +67,16 @@ class MotivationHomeScreen extends StatelessWidget {
                   );
                 }
 
-                return ListView(
-                  children: snapshot.data.docs.map<Widget>((document) {
-                    return MotivationAlarmTile(
-                      document['time'],
-                      document['repeat'],
-                    );
-                  }).toList(),
-                );
+                return snapshot.data.docs.length == 0
+                    ? const EmptyMotivators()
+                    : ListView(
+                        children: snapshot.data.docs.map<Widget>((document) {
+                          return MotivationAlarmTile(
+                            document['time'],
+                            document['repeat'],
+                          );
+                        }).toList(),
+                      );
               },
             ),
           ),
