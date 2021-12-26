@@ -29,7 +29,7 @@ class MotivationHomeScreen extends StatelessWidget {
         distance: 70,
         children: [
           ActionButton(
-            onPressed: () {},
+            onPressed: () => FirebaseAuth.instance.signOut(),
             icon: Icon(
               Icons.logout,
               color: Theme.of(context).primaryColor,
