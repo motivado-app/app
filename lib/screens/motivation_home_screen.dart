@@ -80,7 +80,13 @@ class _MotivationHomeScreenState extends State<MotivationHomeScreen> {
                   .snapshots(),
               builder: (ctx, AsyncSnapshot snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return CircularProgressIndicator();
+                  return const Center(
+                    child: SizedBox(
+                      width: 30,
+                      height: 30,
+                      child: CircularProgressIndicator(),
+                    ),
+                  );
                 }
 
                 return ListView(
