@@ -8,7 +8,7 @@ class FloatingButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ExpendableFab(
-      distance: 80,
+      distance: 95,
       children: [
         Column(
           children: [
