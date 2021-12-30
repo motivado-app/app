@@ -205,7 +205,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             shape: MaterialStateProperty.all<
                                 RoundedRectangleBorder>(
                               RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(24.0),
+                                borderRadius: BorderRadius.circular(20.0),
                               ),
                             ),
                           ),
