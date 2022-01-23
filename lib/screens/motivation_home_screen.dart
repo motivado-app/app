@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 
 import '../widgets/motivation_alarm_tile.dart';
 import '../widgets/empty_motivators.dart';
@@ -36,16 +37,28 @@ class MotivationHomeScreen extends StatelessWidget {
               height: _screenHeight * 0.4,
             ),
           ),
-          Container(
-            width: _screenWidth * 0.7,
-            child: const Text(
-              '"Everyone has a god, they just call it different names"',
-              style:
-                  TextStyle(fontWeight: FontWeight.bold, color: Colors.black54),
-              textAlign: TextAlign.center,
-              textWidthBasis: TextWidthBasis.longestLine,
-            ),
-          ),
+          StreamBuilder(
+              stream: FirebaseFirestore.instance
+                  .collection('app_variables')
+                  .doc('motivation-home-screen')
+                  .snapshots(),
+              builder: (ctx, AsyncSnapshot snpShot) {
+                if (snpShot.connectionState == ConnectionState.waiting) {
+                  context.loaderOverlay.show();
+                  return const Text('');
+                }
+                context.loaderOverlay.hide();
+                return Container(
+                  width: _screenWidth * 0.7,
+                  child: Text(
+                    snpShot.data['quote'],
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold, color: Colors.black54),
+                    textAlign: TextAlign.center,
+                    textWidthBasis: TextWidthBasis.longestLine,
+                  ),
+                );
+              }),
           const SizedBox(
             height: 20,
           ),
@@ -58,18 +71,15 @@ class MotivationHomeScreen extends StatelessWidget {
                   .snapshots(),
               builder: (ctx, AsyncSnapshot snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(
-                    child: SizedBox(
-                      width: 30,
-                      height: 30,
-                      child: CircularProgressIndicator(),
-                    ),
-                  );
+                  context.loaderOverlay.show();
+                  return EmptyMotivators();
                 }
 
+                context.loaderOverlay.hide();
                 return snapshot.data.docs.length == 0
                     ? const EmptyMotivators()
                     : ListView(
+                        // shrinkWrap: true,
                         children: snapshot.data.docs.map<Widget>((document) {
                           return MotivationAlarmTile(
                             document['time'],

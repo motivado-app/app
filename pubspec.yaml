@@ -45,6 +45,8 @@ dependencies:
   expendable_fab: ^0.0.3
   day_night_time_picker: ^1.0.4
   firebase_messaging: ^11.2.4
+  loader_overlay: ^2.0.4+3
+  system_alert_window: ^1.0.0
 
 dev_dependencies:
   flutter_test:
